@@ -25,6 +25,7 @@ const userController = {
       return res.status(200).json({
         message: "Successfully logged in",
         user,
+        token,
       });
     } catch (error) {
       next(error);
