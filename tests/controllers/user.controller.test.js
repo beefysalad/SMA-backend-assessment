@@ -3,11 +3,16 @@ const userService = require("../../src/service/user.services");
 const AppError = require("../../src/utils/app.error");
 
 jest.mock("../../src/service/user.services");
+jest.mock("../../src/utils/jwt", () => ({
+  signToken: jest.fn(() => "test-token"),
+  getAuthCookieOptions: jest.fn(() => ({ httpOnly: true })),
+}));
 
 function createRes() {
   return {
     status: jest.fn().mockReturnThis(),
     json: jest.fn(),
+    cookie: jest.fn(),
   };
 }
 
@@ -92,7 +97,13 @@ describe("User Controller (unit)", () => {
       expect(res.json).toHaveBeenCalledWith({
         message: "Successfully logged in",
         user: mockUser,
+        token: "test-token",
       });
+      expect(res.cookie).toHaveBeenCalledWith(
+        "token",
+        "test-token",
+        expect.objectContaining({ httpOnly: true })
+      );
       expect(next).not.toHaveBeenCalled();
     });
 
