@@ -44,7 +44,7 @@ This is a RESTful API built with Node.js and Express for managing products and u
 
 ## Database Setup
 
-Initialize the database schema using Prisma:
+Initialize the databaseschema using Prisma:
 
 ```bash
 npx prisma migrate dev
