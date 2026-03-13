@@ -8,7 +8,10 @@ const validate = (schema) => (req, res, next) => {
     if (error instanceof ZodError) {
       return res.status(400).json({
         message: "Validation failed",
-        errors: error.errors,
+        errors: error.issues.map((err) => ({
+          field: err.path.join("."),
+          message: err.message,
+        })),
       });
     }
     return res.status(500).json({ message: "Internal Server Error" });
