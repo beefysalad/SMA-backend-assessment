@@ -37,12 +37,12 @@ REST API built with Node.js + Express for managing products and users. Follows a
 
 ## Environment Variables
 
-| Variable        | Description                                                                              |
-| :-------------- | :--------------------------------------------------------------------------------------- |
-| `DATABASE_URL`  | The full connection string to your PostgreSQL database.                                  |
-| `PORT`          | The port the Express server runs on (defaults to 3000 if set in .env, fallback to 8080). |
-| `JWT_SECRET`    | Secret key used to sign JWT tokens.                                                      |
-| `CLIENT_ORIGIN` | Frontend origin allowed by CORS (e.g., `http://localhost:3000`).                         |
+| Variable        | Description                                                      |
+| :-------------- | :--------------------------------------------------------------- |
+| `DATABASE_URL`  | The full connection string to your PostgreSQL database.          |
+| `PORT`          | The port the Express server runs on (default 8080).              |
+| `JWT_SECRET`    | Secret key used to sign JWT tokens.                              |
+| `CLIENT_ORIGIN` | Frontend origin allowed by CORS (e.g., `http://localhost:3000`). |
 
 ## Database Setup
 
@@ -116,18 +116,18 @@ psql "postgresql://postgres:postgres@localhost:5433/sma_backend_db"
 
 ## API Endpoints
 
-| Method | Path                     | Auth Required | Description                             |
-| :----- | :----------------------- | :------------ | :-------------------------------------- |
-| `POST` | `/api/auth/sign-up`      | No            | Register a new user.                    |
-| `POST` | `/api/auth/sign-in`      | No            | Login and set httpOnly JWT cookie.      |
-| `POST` | `/api/auth/logout`       | No            | Clear auth cookie.                      |
-| `PUT`  | `/api/auth/profile`      | Yes           | Update profile (name/password).         |
-| `GET`  | `/api/products`          | Yes           | List products (pagination/search/sort). |
-| `GET`  | `/api/products/:id`      | Yes           | Get product details.                    |
-| `POST` | `/api/products`          | Yes           | Create product.                         |
-| `POST` | `/api/products/seed`     | Yes           | Seed dummy products.                    |
-| `PUT`  | `/api/products/:id`      | Yes           | Update product.                         |
-| `DELETE` | `/api/products/:id`    | Yes           | Delete product.                         |
+| Method   | Path                 | Auth Required | Description                             |
+| :------- | :------------------- | :------------ | :-------------------------------------- |
+| `POST`   | `/api/auth/sign-up`  | No            | Register a new user.                    |
+| `POST`   | `/api/auth/sign-in`  | No            | Login and set httpOnly JWT cookie.      |
+| `POST`   | `/api/auth/logout`   | No            | Clear auth cookie.                      |
+| `PUT`    | `/api/auth/profile`  | Yes           | Update profile (name/password).         |
+| `GET`    | `/api/products`      | Yes           | List products (pagination/search/sort). |
+| `GET`    | `/api/products/:id`  | Yes           | Get product details.                    |
+| `POST`   | `/api/products`      | Yes           | Create product.                         |
+| `POST`   | `/api/products/seed` | Yes           | Seed dummy products.                    |
+| `PUT`    | `/api/products/:id`  | Yes           | Update product.                         |
+| `DELETE` | `/api/products/:id`  | Yes           | Delete product.                         |
 
 ### Query Params (Products)
 
