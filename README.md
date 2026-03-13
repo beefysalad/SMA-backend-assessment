@@ -19,11 +19,7 @@ REST API built with Node.js + Express for managing products and users. Follows a
 
 ## Installation
 
-1. Clone the repository and navigate to the backend folder:
-
-   ```bash
-   cd backend
-   ```
+1. Clone the repository.
 
 2. Install the dependencies:
 
@@ -53,11 +49,18 @@ npx prisma migrate dev
 
 _(This command applies migrations found in `prisma/migrations` and ensures your database structure is up-to-date)._
 
+## Seeder
+
+Generate large test data (50,000 products):
+using faker.js (https://fakerjs.dev/)
+
+```bash
+npm run seed
+```
+
 ## How to Run
 
 ### Option A: Docker (Recommended)
-
-From the `backend` directory:
 
 ```bash
 docker compose up --build
