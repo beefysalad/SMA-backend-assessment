@@ -46,7 +46,9 @@ REST API built with Node.js + Express for managing products and users. Follows a
 
 ## Database Setup
 
-Initialize the database schema using Prisma:
+Initialize the database schema using Prisma.
+
+Important: migrations require a reachable Postgres database. If you are using Docker, start Docker and run `docker compose up --build` first (the container will run migrations automatically). If you are not using Docker, make sure your local/hosted Postgres is running and `DATABASE_URL` points to it.
 
 ```bash
 npm run migrate
@@ -81,6 +83,8 @@ This starts:
 
 - API on `http://localhost:8080`
 - Postgres on `localhost:5433`
+
+The Docker entrypoint runs Prisma migrations on startup, so you do not need to run `npm run migrate` separately when using Docker.
 
 If port `8080` is busy, change the host port in `docker-compose.yml`:
 
