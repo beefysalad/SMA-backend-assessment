@@ -1,5 +1,7 @@
 # Product Management System API (Backend)
 
+Submitted and created by John Patrick Ryan Mandal.
+
 REST API built with Node.js + Express for managing products and users. Follows an MVC structure and uses PostgreSQL with Prisma ORM.
 
 ## Tech Stack
@@ -66,6 +68,16 @@ npm run generate
 
 Generate large test data (50,000 products):
 using faker.js (https://fakerjs.dev/)
+
+**If using Docker (Recommended):**
+Run this command to execute the seeder inside the running API container:
+
+```bash
+npm run docker:seed
+```
+
+**If running locally (without Docker):**
+Ensure you have generated the Prisma client first (`npm run generate`), then run:
 
 ```bash
 npm run seed

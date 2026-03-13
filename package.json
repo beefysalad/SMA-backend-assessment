@@ -9,7 +9,8 @@
     "start": "node src/server.js",
     "generate": "prisma generate",
     "migrate": "prisma migrate dev",
-    "seed": "node src/seeders/product.seeder.js"
+    "seed": "node src/seeders/product.seeder.js",
+    "docker:seed": "docker exec -it sma-backend-assessment npm run seed"
   },
   "keywords": [],
   "author": "",
