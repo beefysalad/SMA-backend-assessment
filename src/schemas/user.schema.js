@@ -16,9 +16,12 @@ const userSignInSchema = z.object({
 const updateProfileSchema = z
   .object({
     name: z.string().min(1).optional(),
-    password: z.string().min(6).optional(),
+    password: z.preprocess(
+      (val) => (val === "" ? undefined : val),
+      z.string().min(6).optional()
+    ),
   })
-  .refine((data) => data.name || data.password, {
+  .refine((data) => !!data.name || !!data.password, {
     message: "Provide a name or password",
   });
 

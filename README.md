@@ -86,6 +86,19 @@ This starts:
 
 The Docker entrypoint runs Prisma migrations on startup, so you do not need to run `npm run migrate` separately when using Docker.
 
+**DATABASE_URL note (host vs container):**
+If you run the API on your host machine (e.g., `npm run dev`), use the host-exposed port:
+
+```bash
+DATABASE_URL="postgresql://postgres:postgres@localhost:5433/sma_backend_db?schema=public"
+```
+
+If you run the API inside Docker (via `docker compose up`), use the Docker service name and container port:
+
+```bash
+DATABASE_URL="postgresql://postgres:postgres@db:5433/sma_backend_db?schema=public"
+```
+
 If port `8080` is busy, change the host port in `docker-compose.yml`:
 
 ```yaml
