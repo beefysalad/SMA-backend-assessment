@@ -14,7 +14,18 @@ const productController = {
     try {
       const page = Math.max(parseInt(req.query.page, 10) || 1, 1);
       const limit = Math.max(parseInt(req.query.limit, 10) || 20, 1);
-      const result = await productService.getAllProducts(page, limit);
+      const search = typeof req.query.search === "string" ? req.query.search : "";
+      const sortByRaw = typeof req.query.sortBy === "string" ? req.query.sortBy : "createdAt";
+      const sortOrderRaw = typeof req.query.sortOrder === "string" ? req.query.sortOrder : "desc";
+      const allowedSortBy = ["createdAt", "price", "name"];
+      const sortBy = allowedSortBy.includes(sortByRaw) ? sortByRaw : "createdAt";
+      const sortOrder = sortOrderRaw === "asc" ? "asc" : "desc";
+
+      const result = await productService.getAllProducts(page, limit, {
+        search,
+        sortBy,
+        sortOrder,
+      });
       return res.status(200).json(result);
     } catch (error) {
       next(error);

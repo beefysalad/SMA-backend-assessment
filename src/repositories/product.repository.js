@@ -1,15 +1,27 @@
 const prisma = require("../utils/prisma");
 
 const productRepository = {
-  findAll: async (page, limit) => {
+  findAll: async (page, limit, options = {}) => {
     const skip = (page - 1) * limit;
+    const { search, sortBy, sortOrder } = options;
+    const orderField = sortBy || "createdAt";
+    const orderDirection = sortOrder || "desc";
+    const where = search
+      ? {
+          OR: [
+            { name: { contains: search, mode: "insensitive" } },
+            { description: { contains: search, mode: "insensitive" } },
+          ],
+        }
+      : undefined;
     const [data, total] = await Promise.all([
       prisma.product.findMany({
         skip,
         take: limit,
-        orderBy: { createdAt: "desc" },
+        where,
+        orderBy: { [orderField]: orderDirection },
       }),
-      prisma.product.count(),
+      prisma.product.count({ where }),
     ]);
 
     return { data, total };

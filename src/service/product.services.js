@@ -6,8 +6,12 @@ const productService = {
     return productRepository.create(data);
   },
 
-  getAllProducts: async (page, limit) => {
-    const { data, total } = await productRepository.findAll(page, limit);
+  getAllProducts: async (page, limit, options) => {
+    const { data, total } = await productRepository.findAll(
+      page,
+      limit,
+      options
+    );
     const totalPages = Math.max(1, Math.ceil(total / limit));
     return { data, total, page, limit, totalPages };
   },
