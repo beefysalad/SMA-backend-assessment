@@ -1,6 +1,6 @@
 # Product Management System API (Backend)
 
-This is a RESTful API built with Node.js and Express for managing products and users. It follows an MVC-inspired architecture and uses PostgreSQL with Prisma ORM.
+REST API built with Node.js + Express for managing products and users. Follows an MVC structure and uses PostgreSQL with Prisma ORM.
 
 ## Tech Stack
 
@@ -9,11 +9,11 @@ This is a RESTful API built with Node.js and Express for managing products and u
 - **ORM**: Prisma
 - **Database**: PostgreSQL
 - **Validation**: Zod
-- **Authentication**: bcrypt (JWT to be added)
+- **Authentication**: JWT and cookie
 
 ## Prerequisites
 
-- Node.js (v18+ recommended)
+- Node.js (v18+)
 - A running PostgreSQL database instance (or a hosted DB URL)
 - Docker + Docker Compose (optional, for one-command local setup)
 
@@ -36,15 +36,16 @@ This is a RESTful API built with Node.js and Express for managing products and u
 
 ## Environment Variables
 
-| Variable       | Description                                                                              |
-| :------------- | :--------------------------------------------------------------------------------------- |
-| `DATABASE_URL` | The full connection string to your PostgreSQL database.                                  |
-| `PORT`         | The port the Express server runs on (defaults to 3000 if set in .env, fallback to 8080). |
-| `JWT_SECRET`   | (Upcoming) Secret key used to sign JWT tokens.                                           |
+| Variable        | Description                                                                              |
+| :-------------- | :--------------------------------------------------------------------------------------- |
+| `DATABASE_URL`  | The full connection string to your PostgreSQL database.                                  |
+| `PORT`          | The port the Express server runs on (defaults to 3000 if set in .env, fallback to 8080). |
+| `JWT_SECRET`    | Secret key used to sign JWT tokens.                                                      |
+| `CLIENT_ORIGIN` | Frontend origin allowed by CORS (e.g., `http://localhost:3000`).                         |
 
 ## Database Setup
 
-Initialize the databaseschema using Prisma:
+Initialize the database schema using Prisma:
 
 ```bash
 npx prisma migrate dev
@@ -98,10 +99,3 @@ You can connect using any Postgres GUI (TablePlus, DBeaver, pgAdmin) or CLI:
 ```bash
 psql "postgresql://postgres:postgres@localhost:5433/sma_backend_db"
 ```
-
-## API Endpoints (Current Implementation)
-
-| Method | Path                | Auth Required | Description                                                         |
-| :----- | :------------------ | :------------ | :------------------------------------------------------------------ |
-| `POST` | `/api/auth/sign-up` | No            | Register a new user account.                                        |
-| `POST` | `/api/auth/sign-in` | No            | Login with an existing user account. _(JWT auth flow in progress)._ |
