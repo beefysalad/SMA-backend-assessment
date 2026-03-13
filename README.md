@@ -49,10 +49,16 @@ REST API built with Node.js + Express for managing products and users. Follows a
 Initialize the database schema using Prisma:
 
 ```bash
-npx prisma migrate dev
+npm run migrate
 ```
 
 _(This command applies migrations found in `prisma/migrations` and ensures your database structure is up-to-date)._
+
+Generate Prisma client:
+
+```bash
+npm run generate
+```
 
 ## Seeder
 
@@ -115,6 +121,7 @@ psql "postgresql://postgres:postgres@localhost:5433/sma_backend_db"
 | `POST` | `/api/auth/sign-up`      | No            | Register a new user.                    |
 | `POST` | `/api/auth/sign-in`      | No            | Login and set httpOnly JWT cookie.      |
 | `POST` | `/api/auth/logout`       | No            | Clear auth cookie.                      |
+| `PUT`  | `/api/auth/profile`      | Yes           | Update profile (name/password).         |
 | `GET`  | `/api/products`          | Yes           | List products (pagination/search/sort). |
 | `GET`  | `/api/products/:id`      | Yes           | Get product details.                    |
 | `POST` | `/api/products`          | Yes           | Create product.                         |

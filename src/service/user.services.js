@@ -43,6 +43,33 @@ const userService = {
       throw error;
     }
   },
+
+  updateUserProfile: async (userId, data) => {
+    try {
+      const user = await userRepository.findById(userId);
+      if (!user) {
+        throw new AppError("User not found", 404);
+      }
+
+      const updates = {};
+      if (data.name) {
+        updates.name = data.name;
+      }
+      if (data.password) {
+        updates.password = await bcrypt.hash(data.password, 10);
+      }
+
+      if (Object.keys(updates).length === 0) {
+        throw new AppError("No updates provided", 400);
+      }
+
+      const updatedUser = await userRepository.update(userId, updates);
+      const { password: _, ...userWithoutPassword } = updatedUser;
+      return userWithoutPassword;
+    } catch (error) {
+      throw error;
+    }
+  },
 };
 
 //private functiond in service file

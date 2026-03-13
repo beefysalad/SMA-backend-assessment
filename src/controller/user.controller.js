@@ -39,6 +39,19 @@ const userController = {
       next(error);
     }
   },
+
+  updateProfile: async (req, res, next) => {
+    try {
+      const userId = req.user?.id;
+      const user = await userService.updateUserProfile(userId, req.body);
+      return res.status(200).json({
+        message: "Profile updated",
+        user,
+      });
+    } catch (error) {
+      next(error);
+    }
+  },
 };
 
 module.exports = userController;

@@ -13,7 +13,17 @@ const userSignInSchema = z.object({
   password: z.string().min(6),
 });
 
+const updateProfileSchema = z
+  .object({
+    name: z.string().min(1).optional(),
+    password: z.string().min(6).optional(),
+  })
+  .refine((data) => data.name || data.password, {
+    message: "Provide a name or password",
+  });
+
 module.exports = {
   userSignUpSchema,
   userSignInSchema,
+  updateProfileSchema,
 };
