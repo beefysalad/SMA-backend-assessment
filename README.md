@@ -15,6 +15,7 @@ This is a RESTful API built with Node.js and Express for managing products and u
 
 - Node.js (v18+ recommended)
 - A running PostgreSQL database instance (or a hosted DB URL)
+- Docker + Docker Compose (optional, for one-command local setup)
 
 ## Installation
 
@@ -53,11 +54,49 @@ _(This command applies migrations found in `prisma/migrations` and ensures your 
 
 ## How to Run
 
+### Option A: Docker (Recommended)
+
+From the `backend` directory:
+
+```bash
+docker compose up --build
+```
+
+This starts:
+
+- API on `http://localhost:8080`
+- Postgres on `localhost:5433`
+
+If port `8080` is busy, change the host port in `docker-compose.yml`:
+
+```yaml
+ports:
+  - "8081:8080"
+```
+
+Then access the API at `http://localhost:8081`.
+
 **Development Mode:**
 Runs the server with Nodemon to auto-restart on file changes.
 
 ```bash
 npm run dev
+```
+
+## Where to find the DB
+
+The Docker setup creates a Postgres database with:
+
+- **Host**: `localhost`
+- **Port**: `5433`
+- **User**: `postgres`
+- **Password**: `postgres`
+- **Database**: `sma_backend_db`
+
+You can connect using any Postgres GUI (TablePlus, DBeaver, pgAdmin) or CLI:
+
+```bash
+psql "postgresql://postgres:postgres@localhost:5433/sma_backend_db"
 ```
 
 ## API Endpoints (Current Implementation)
