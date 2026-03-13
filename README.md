@@ -19,7 +19,12 @@ REST API built with Node.js + Express for managing products and users. Follows a
 
 ## Installation
 
-1. Clone the repository.
+1. Clone the repository and enter the folder:
+
+   ```bash
+   git clone https://github.com/beefysalad/SMA-backend-assessment.git
+   cd SMA-backend-assessment
+   ```
 
 2. Install the dependencies:
 
