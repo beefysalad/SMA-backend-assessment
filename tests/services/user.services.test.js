@@ -1,13 +1,11 @@
 const userService = require("../../src/service/user.services");
-const prisma = require("../../src/utils/prisma");
 const bcrypt = require("bcrypt");
 const AppError = require("../../src/utils/app.error");
+const userRepository = require("../../src/repositories/user.repository");
 
-jest.mock("../../src/utils/prisma", () => ({
-  user: {
-    findUnique: jest.fn(),
-    create: jest.fn(),
-  },
+jest.mock("../../src/repositories/user.repository", () => ({
+  findByEmail: jest.fn(),
+  create: jest.fn(),
 }));
 
 jest.mock("bcrypt", () => ({
@@ -29,9 +27,9 @@ describe("User Services", () => {
         password: "hashedPassword123",
       };
 
-      prisma.user.findUnique.mockResolvedValue(null);
+      userRepository.findByEmail.mockResolvedValue(null);
       bcrypt.hash.mockResolvedValue("hashedPassword123");
-      prisma.user.create.mockResolvedValue(mockUser);
+      userRepository.create.mockResolvedValue(mockUser);
 
       const result = await userService.userSignUpService(
         "Test User",
@@ -39,16 +37,12 @@ describe("User Services", () => {
         "password123",
       );
 
-      expect(prisma.user.findUnique).toHaveBeenCalledWith({
-        where: { email: "test@example.com" },
-      });
+      expect(userRepository.findByEmail).toHaveBeenCalledWith("test@example.com");
       expect(bcrypt.hash).toHaveBeenCalledWith("password123", 10);
-      expect(prisma.user.create).toHaveBeenCalledWith({
-        data: {
-          name: "Test User",
-          email: "test@example.com",
-          password: "hashedPassword123",
-        },
+      expect(userRepository.create).toHaveBeenCalledWith({
+        name: "Test User",
+        email: "test@example.com",
+        password: "hashedPassword123",
       });
 
       expect(result).not.toHaveProperty("password");
@@ -56,7 +50,7 @@ describe("User Services", () => {
     });
 
     it("should throw an AppError if user already exists", async () => {
-      prisma.user.findUnique.mockResolvedValue({
+      userRepository.findByEmail.mockResolvedValue({
         id: 1,
         email: "test@example.com",
       });
@@ -87,7 +81,7 @@ describe("User Services", () => {
         password: "hashedPassword123",
       };
 
-      prisma.user.findUnique.mockResolvedValue(mockUser);
+      userRepository.findByEmail.mockResolvedValue(mockUser);
       bcrypt.compare.mockResolvedValue(true);
 
       const result = await userService.userSignInService(
@@ -95,9 +89,7 @@ describe("User Services", () => {
         "password123",
       );
 
-      expect(prisma.user.findUnique).toHaveBeenCalledWith({
-        where: { email: "test@example.com" },
-      });
+      expect(userRepository.findByEmail).toHaveBeenCalledWith("test@example.com");
       expect(bcrypt.compare).toHaveBeenCalledWith(
         "password123",
         "hashedPassword123",
@@ -107,7 +99,7 @@ describe("User Services", () => {
     });
 
     it("should throw an AppError if user does not exist", async () => {
-      prisma.user.findUnique.mockResolvedValue(null);
+      userRepository.findByEmail.mockResolvedValue(null);
 
       await expect(
         userService.userSignInService("notfound@example.com", "password123"),
@@ -125,7 +117,7 @@ describe("User Services", () => {
         password: "hashedPassword123",
       };
 
-      prisma.user.findUnique.mockResolvedValue(mockUser);
+      userRepository.findByEmail.mockResolvedValue(mockUser);
       bcrypt.compare.mockResolvedValue(false);
 
       await expect(

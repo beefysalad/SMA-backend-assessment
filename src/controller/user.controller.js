@@ -31,6 +31,15 @@ const userController = {
       next(error);
     }
   },
+
+  logout: (_req, res, next) => {
+    try {
+      res.clearCookie("token", getAuthCookieOptions());
+      return res.status(200).json({ message: "Logged out" });
+    } catch (error) {
+      next(error);
+    }
+  },
 };
 
 module.exports = userController;

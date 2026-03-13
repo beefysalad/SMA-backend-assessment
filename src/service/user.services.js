@@ -1,6 +1,6 @@
-const prisma = require("../utils/prisma");
 const bcrypt = require("bcrypt");
 const AppError = require("../utils/app.error");
+const userRepository = require("../repositories/user.repository");
 
 const userService = {
   //user sign up service
@@ -12,12 +12,10 @@ const userService = {
       }
 
       const hashedPassword = await bcrypt.hash(password, 10);
-      const user = await prisma.user.create({
-        data: {
-          name,
-          email,
-          password: hashedPassword,
-        },
+      const user = await userRepository.create({
+        name,
+        email,
+        password: hashedPassword,
       });
 
       const { password: _, ...userWithoutPassword } = user;
@@ -47,14 +45,9 @@ const userService = {
   },
 };
 
-//private function within service file
+//private functiond in service file
 const _userExists = async (email) => {
-  const user = await prisma.user.findUnique({
-    where: {
-      email,
-    },
-  });
-  return user;
+  return userRepository.findByEmail(email);
 };
 
 module.exports = userService;
