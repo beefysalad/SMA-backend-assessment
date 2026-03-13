@@ -35,6 +35,10 @@ const productRepository = {
     return prisma.product.create({ data });
   },
 
+  createMany: async (data) => {
+    return prisma.product.createMany({ data });
+  },
+
   update: async (id, data) => {
     return prisma.product.update({ where: { id }, data });
   },

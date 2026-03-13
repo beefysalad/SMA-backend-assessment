@@ -9,6 +9,7 @@ const {
 const router = express.Router();
 
 router.post("/", validate(productCreateSchema), productController.createProduct);
+router.post("/seed", productController.seedProducts);
 router.get("/", productController.getAllProducts);
 router.get("/:id", productController.getProductById);
 router.put(

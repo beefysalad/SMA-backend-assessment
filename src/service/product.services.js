@@ -40,6 +40,23 @@ const productService = {
     await productRepository.delete(id);
     return { message: "Product deleted" };
   },
+
+  seedProducts: async (count, faker) => {
+    const total = Math.max(1, Math.min(count, 5000));
+    const batchSize = 500;
+    let created = 0;
+    const { buildProducts } = require("../seeders/product.factory");
+
+    while (created < total) {
+      const size = Math.min(batchSize, total - created);
+      const data = buildProducts(size, faker);
+
+      await productRepository.createMany(data);
+      created += size;
+    }
+
+    return { message: `Seeded ${total} products.` };
+  },
 };
 
 module.exports = productService;

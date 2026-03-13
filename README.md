@@ -102,3 +102,31 @@ You can connect using any Postgres GUI (TablePlus, DBeaver, pgAdmin) or CLI:
 ```bash
 psql "postgresql://postgres:postgres@localhost:5433/sma_backend_db"
 ```
+
+## API Endpoints
+
+| Method | Path                     | Auth Required | Description                             |
+| :----- | :----------------------- | :------------ | :-------------------------------------- |
+| `POST` | `/api/auth/sign-up`      | No            | Register a new user.                    |
+| `POST` | `/api/auth/sign-in`      | No            | Login and set httpOnly JWT cookie.      |
+| `POST` | `/api/auth/logout`       | No            | Clear auth cookie.                      |
+| `GET`  | `/api/products`          | Yes           | List products (pagination/search/sort). |
+| `GET`  | `/api/products/:id`      | Yes           | Get product details.                    |
+| `POST` | `/api/products`          | Yes           | Create product.                         |
+| `POST` | `/api/products/seed`     | Yes           | Seed dummy products.                    |
+| `PUT`  | `/api/products/:id`      | Yes           | Update product.                         |
+| `DELETE` | `/api/products/:id`    | Yes           | Delete product.                         |
+
+### Query Params (Products)
+
+- `page` (number) – page index (default 1)
+- `limit` (number) – page size (default 20)
+- `search` (string) – matches name/description
+- `sortBy` (createdAt | price | name)
+- `sortOrder` (asc | desc)
+
+## Auth Flow
+
+- Client calls `POST /api/auth/sign-in`
+- Server validates credentials, signs JWT, and sets it in an httpOnly cookie (`token`)
+- Protected routes read the cookie in auth middleware

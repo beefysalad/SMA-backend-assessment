@@ -61,6 +61,17 @@ const productController = {
       next(error);
     }
   },
+
+  seedProducts: async (req, res, next) => {
+    try {
+      const { faker } = require("@faker-js/faker");
+      const count = Math.max(parseInt(req.body.count, 10) || 100, 1);
+      const result = await productService.seedProducts(count, faker);
+      return res.status(200).json(result);
+    } catch (error) {
+      next(error);
+    }
+  },
 };
 
 module.exports = productController;
