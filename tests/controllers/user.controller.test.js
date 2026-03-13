@@ -97,7 +97,6 @@ describe("User Controller (unit)", () => {
       expect(res.json).toHaveBeenCalledWith({
         message: "Successfully logged in",
         user: mockUser,
-        token: "test-token",
       });
       expect(res.cookie).toHaveBeenCalledWith(
         "token",
