@@ -20,6 +20,7 @@ services:
       PORT: 8080
       DATABASE_URL: postgresql://postgres:postgres@db:5432/sma_backend_db?schema=public
       JWT_SECRET: change-me
+      CLIENT_ORIGIN: http://localhost:3000
     ports:
       - "8080:8080"
     depends_on:
